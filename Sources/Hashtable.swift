@@ -359,6 +359,98 @@ public struct Hashtable<K: Hashable, V> : CustomStringConvertible {
         }
     }
     #endif
+
+    // Method to retrieve all keys in a sorted array
+
+    #if THREADSAFE
+    mutating public func sortedKeys(lessThan: (_: K, _: K) -> Bool) -> [K] {
+        var ret = [K]()
+        pthread_rwlock_rdlock(&lock);
+        defer { pthread_rwlock_unlock(&lock); }
+
+        forEachKey({(key) in
+            // binary search to find where to insert
+            var low = 0
+            var high = ret.count
+            while low < high {
+                let mid = (low + high) / 2
+                if lessThan(ret[mid], key) {
+                    low = mid + 1
+                } else {
+                    high = mid
+                }
+            }
+            ret.insert(key, at: high)
+        })
+        return ret
+    }
+    #else
+    public func sortedKeys(lessThan: (_: K, _: K) -> Bool) -> [K] {
+        var ret = [K]()
+
+        forEachKey({(key) in
+            // binary search to find where to insert
+            var low = 0
+            var high = ret.count
+            while low < high {
+                let mid = (low + high) / 2
+                if lessThan(ret[mid], key) {
+                    low = mid + 1
+                } else {
+                    high = mid
+                }
+            }
+            ret.insert(key, at: high)
+        })
+        return ret
+    }
+    #endif
+
+    // Method to retrieve all values in a sorted array
+
+    #if THREADSAFE
+    mutating public func sortedValues(lessThan: (_: V, _: V) -> Bool) -> [V] {
+        var ret = [V]()
+        pthread_rwlock_rdlock(&lock);
+        defer { pthread_rwlock_unlock(&lock); }
+
+        forEachValue({(value) in
+            // binary search to find where to insert
+            var low = 0
+            var high = ret.count
+            while low < high {
+                let mid = (low + high) / 2
+                if lessThan(ret[mid], value) {
+                    low = mid + 1
+                } else {
+                    high = mid
+                }
+            }
+            ret.insert(value, at: high)
+        })
+        return ret
+    }
+    #else
+    public func sortedValues(lessThan: (_: V, _: V) -> Bool) -> [V] {
+        var ret = [V]()
+
+        forEachValue({(value) in
+            // binary search to find where to insert
+            var low = 0
+            var high = ret.count
+            while low < high {
+                let mid = (low + high) / 2
+                if lessThan(ret[mid], value) {
+                    low = mid + 1
+                } else {
+                    high = mid
+                }
+            }
+            ret.insert(value, at: high)
+        })
+        return ret
+    }
+    #endif
     
     // Method to 4x the capacity of the table. All entries need to be copied
 
@@ -518,8 +610,7 @@ public struct Hashtable<K: Hashable, V> : CustomStringConvertible {
         }
     }
     #endif
-} 
-
+}
 
 
 
