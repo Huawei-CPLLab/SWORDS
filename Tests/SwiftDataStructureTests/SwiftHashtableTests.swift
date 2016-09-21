@@ -17,7 +17,7 @@
 
 import Glibc
 import XCTest
-@testable import SwiftHashtable
+@testable import SwiftDataStructure
 
 // Class to represent objects stored in the hash table as values
 final class MyVal : CustomStringConvertible {

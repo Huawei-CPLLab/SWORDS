@@ -15,5 +15,5 @@
 import PackageDescription
 
 let package = Package(
-    name: "SwiftHashtable"
+    name: "SwiftDataStructure"
 )

@@ -1,6 +1,7 @@
 import XCTest
-@testable import SwiftHashtableTests
+@testable import SwiftDataStructureTests
 
 XCTMain([
      testCase(SwiftHashtableTests.allTests),
+     testCase(QueueTests.allTests),
 ])

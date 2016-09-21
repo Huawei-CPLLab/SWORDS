@@ -1,3 +1,5 @@
+This project contains a few high performance data structure implemented in Swift.
+
 # SwiftHashtable
 
 A hash table implementation in Swift 3.0 based on associative arrays and Fast Probing.
@@ -47,29 +49,48 @@ However, I noticed the gains are shrinked when 1) the keys have less collisions 
 
 When compiled with -D THREADSAFE, the hash table is thread safe.
 
-# Build SwiftHashtable #
+# Queue
+
+Queue has the basic operations, following the protocol
+```swift
+public protocol Queue {
+  associatedtype T
+  func enqueue(item:T)
+  func dequeue() -> T?
+  func remove()->T
+  func isEmpty()->Bool
+  func peek()->T?
+}
+```
+
+There different queues are implemented
+* ArrayQueue: Uses Swift's Array as storage. The performance is not good, and it is for demo purpose.
+* ListQueue: Use a linked list as storage. Good performance.
+* FastQueue: Use UnsafeMutablePointer as storage. The best performance.
+
+# Build SwiftDataStructure
 
 Current implementation targets `Ubuntu 15.10`. `Ubuntu 14.4` is also tested.
 
 ## Install **swift** 
 
-Install preview verison 4 or higher of [Swift 3.0]("https://swift.org/download/#previews")
+Install Swift 3.0 Release [Swift 3.0]("https://swift.org/download/")
 
 
-## Compile Theater
+## Compile
 
-SwiftHashtable uses standard [swift package manager]("https://github.com/apple/swift-package-manager"):
+SwiftDataStructure uses standard [swift package manager]("https://github.com/apple/swift-package-manager"):
 
 *	 swift build, or
 *    swift build -Xswiftc -DTHREADSAFE (to build a thread-safe hash table)
 
-# Testing #
+# Testing
 
 Use the following command to build and test
 
 	swift build && swift test
 
-# Usage #
+# Usage
 
-Check the examples in `Tests/SwiftHashtableTests/` for sample usage.
+Check the examples in `Tests/SwiftHashtableTests/` and `Tests/QueueTests/` for sample usage.
 
