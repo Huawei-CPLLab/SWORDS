@@ -63,7 +63,7 @@ public class ListQueue<T>:Queue {
     private var top : QNode<T>!
     private var bottom : QNode<T>!
 
-    init() {
+    public init() {
         top = nil
         bottom = nil
     }
@@ -113,7 +113,7 @@ public class FastQueue<T>:Queue {
     private var ptr : UnsafeMutablePointer<T>
     private var size : Int 
 
-    init(initSize:Int) {
+    public init(initSize:Int) {
         size = initSize
         ptr = UnsafeMutablePointer<T>.allocate(capacity:size)
     }
