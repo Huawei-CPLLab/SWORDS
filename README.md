@@ -92,6 +92,18 @@ Use the following command to build and test
 
 # Performance
 
+Our experiments show Hash table implementation is on average ~30% faster than Dictionary.
+
+# of entries | Speed up over Dictionary
+------------ | ------------------------
+10           | 23.5%
+100          | 20.6%
+1,000        | 34.1%
+10,000       | 17.6%
+100,000      | 22.2%
+1000,000     | 24.8%
+10,000,000   | 34.2%
+
 # Usage
 
 The hash table can be used the same way as Dictionary in the Swift standard library. For example:
