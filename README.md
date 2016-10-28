@@ -94,7 +94,7 @@ Use the following command to build and test
 
 Our experiments show Hash table implementation is on average ~30% faster than Dictionary.
 
-# of entries | Speed up over Dictionary
+Number of entries | Speed up over Dictionary
 ------------ | ------------------------
 10           | 23.5%
 100          | 20.6%
