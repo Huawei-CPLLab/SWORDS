@@ -90,7 +90,62 @@ Use the following command to build and test
 
 	swift build && swift test
 
+# Performance
+
 # Usage
 
-Check the examples in `Tests/SwiftHashtableTests/` and `Tests/QueueTests/` for sample usage.
+The hash table can be used the same way as Dictionary in the Swift standard library. For example:
+```
+// Create a hash table of (String, Int) pairs. The initial size 8 is optional.
+var ht = Hashtable<String, Int>(count: 8)
+
+// Add or update entries
+ht["Two"] = 2                        // Add, the short way
+ht["Two"] = 3                        // Update
+ht.set(key:"Sixteen", value:16)      // Add, the verbose way
+
+// Delete entries
+Bool removed = ht.remove(key:"Two")  // the short way
+removed = ht.remove(key:"One")       // will return false as "One" is not found as a key
+ht.removeValue(forKey: "two")        // the verbose way
+
+// Lookup entries
+if let v = table["Sixteen"] {        // the short way
+   ... do something with v ...
+}
+let w = ht.get(key: "Three")         // the verbose way
+
+// Query how many entries are in the hash table
+let size = ht.count
+
+// Check if hash table is empty
+let empty = ht.isEmpty()
+
+// traverse the keys (unsorted)
+forEachKey({(key) in {
+   ... do something with key ...
+}
+
+// traverse the values (unsorted)
+forEachValue({(value) in {
+   ... do something with value ...
+}
+
+// traverse the key-value pairs (unsorted)
+forEach({(key, value) in {
+   ... do something with key and value ...
+}
+
+// retrieve keys as a sorted Array
+for key in ht.sortedKeys {
+    ... do something with keys in order ...
+}
+
+// retrieve values as a sorted Array
+for value in ht.sortedValues {
+    ... do something with values in order ...
+}
+```
+
+Check the examples in `Tests/SwiftHashtableTests/` and `Tests/QueueTests/` for more sample usages.
 
