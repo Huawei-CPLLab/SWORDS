@@ -1,4 +1,6 @@
-This project contains a few high performance data structure implemented in Swift.
+SWORDS (SWift ORganic Data Structures) contains a few high performance data structure implemented in pure Swift.
+They are "organic" in the sense the performance critical code are not delegated to another language like C, as
+some other implementations do.
 
 # SwiftHashtable
 
@@ -92,7 +94,7 @@ Use the following command to build and test
 
 # Performance
 
-Our experiments show Hash table implementation is on average ~30% faster than Dictionary.
+Our experiments show Hash table implementation is on average ~25% faster than Dictionary.
 
 Number of entries | Speed up over Dictionary
 ------------ | ------------------------
@@ -103,6 +105,8 @@ Number of entries | Speed up over Dictionary
 100,000      | 22.2%
 1000,000     | 24.8%
 10,000,000   | 34.2%
+------------ | -------------------------
+Mean         | 25.3%
 
 # Usage
 
