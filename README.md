@@ -153,12 +153,12 @@ forEach({(key, value) in {
 }
 
 // retrieve keys as a sorted Array
-for key in ht.sortedKeys {
+for key in ht.sortedKeys(lessThan: {$0 < $1}) {
     ... do something with keys in order ...
 }
 
 // retrieve values as a sorted Array
-for value in ht.sortedValues {
+for value in ht.sortedValues(lessThan: {$0 < $1}) {
     ... do something with values in order ...
 }
 ```
