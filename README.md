@@ -1,4 +1,6 @@
-This project contains a few high performance data structure implemented in Swift.
+SWORDS (SWift ORganic Data Structures) contains a few high performance data structure implemented in pure Swift.
+They are "organic" in the sense the performance critical code are not delegated to another language like C, as
+some other implementations do.
 
 # SwiftHashtable
 
@@ -90,7 +92,76 @@ Use the following command to build and test
 
 	swift build && swift test
 
+# Performance
+
+Our experiments show Hash table implementation is on average ~25% faster than Dictionary.
+
+Number of entries | Speed up over Dictionary
+------------ | ------------------------
+10           | 23.5%
+100          | 20.6%
+1,000        | 34.1%
+10,000       | 17.6%
+100,000      | 22.2%
+1000,000     | 24.8%
+10,000,000   | 34.2%
+------------ | -------------------------
+Mean         | 25.3%
+
 # Usage
 
-Check the examples in `Tests/SwiftHashtableTests/` and `Tests/QueueTests/` for sample usage.
+The hash table can be used the same way as Dictionary in the Swift standard library. For example:
+```
+// Create a hash table of (String, Int) pairs. The initial size 8 is optional.
+var ht = Hashtable<String, Int>(count: 8)
+
+// Add or update entries
+ht["Two"] = 2                        // Add, the short way
+ht["Two"] = 3                        // Update
+ht.set(key:"Sixteen", value:16)      // Add, the verbose way
+
+// Delete entries
+Bool removed = ht.remove(key:"Two")  // the short way
+removed = ht.remove(key:"One")       // will return false as "One" is not found as a key
+ht.removeValue(forKey: "two")        // the verbose way
+
+// Lookup entries
+if let v = table["Sixteen"] {        // the short way
+   ... do something with v ...
+}
+let w = ht.get(key: "Three")         // the verbose way
+
+// Query how many entries are in the hash table
+let size = ht.count
+
+// Check if hash table is empty
+let empty = ht.isEmpty()
+
+// traverse the keys (unsorted)
+forEachKey({(key) in {
+   ... do something with key ...
+}
+
+// traverse the values (unsorted)
+forEachValue({(value) in {
+   ... do something with value ...
+}
+
+// traverse the key-value pairs (unsorted)
+forEach({(key, value) in {
+   ... do something with key and value ...
+}
+
+// retrieve keys as a sorted Array
+for key in ht.sortedKeys(lessThan: {$0 < $1}) {
+    ... do something with keys in order ...
+}
+
+// retrieve values as a sorted Array
+for value in ht.sortedValues(lessThan: {$0 < $1}) {
+    ... do something with values in order ...
+}
+```
+
+Check the examples in `Tests/SwiftHashtableTests/` and `Tests/QueueTests/` for more sample usages.
 
