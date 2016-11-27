@@ -15,7 +15,11 @@
 //  Created by Xuejun Yang on 8/27/16
 //
 
+#if os(OSX) || os(iOS)
+import Darwin
+#elseif os(Linux)
 import Glibc
+#endif
 
 public struct Hashtable<K: Hashable, V> : CustomStringConvertible {
     private var tableSize = 2

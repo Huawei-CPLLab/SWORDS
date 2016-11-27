@@ -15,5 +15,5 @@
 import PackageDescription
 
 let package = Package(
-    name: "SwiftDataStructure"
+    name: "SWORDS"
 )
