@@ -15,9 +15,24 @@
 //  Created by Xuejun Yang on 9/14/16
 //
 
-import Glibc
 import XCTest
 @testable import SwiftDataStructure
+
+#if os(OSX) || os(iOS)
+    import Darwin
+#elseif os(Linux)
+    import Glibc
+#endif
+
+/// Wrapper function for both Linux and Mac
+func randomInt()->Int {
+    #if os(Linux)
+        return random()
+    #else
+        return Int(arc4random())
+    #endif
+}
+
 
 // Class to represent objects stored in the hash table as values
 final class MyVal : CustomStringConvertible {
@@ -98,16 +113,16 @@ class SwiftHashtableTests: XCTestCase {
         allValues = []
         // create the random key-value pairs
         for _ in 0..<count {
-            var index = allLetters.index(allLetters.startIndex, offsetBy: random() % 52)
+            var index = allLetters.index(allLetters.startIndex, offsetBy: randomInt() % 52)
             var key : String = String(allLetters[index])
-            index = allLetters.index(allLetters.startIndex, offsetBy: random() % 52)
+            index = allLetters.index(allLetters.startIndex, offsetBy: randomInt() % 52)
             key += String(allLetters[index])
-            index = allLetters.index(allLetters.startIndex, offsetBy: random() % 52)
+            index = allLetters.index(allLetters.startIndex, offsetBy: randomInt() % 52)
             key += String(allLetters[index])
 
             allKeys.append(key)
 
-            allValues.append(random())
+            allValues.append(randomInt())
         }
         #if DEBUG
         print(allKeys) 
@@ -119,21 +134,21 @@ class SwiftHashtableTests: XCTestCase {
         lookupIndices = []
         updateIndices = []
 
-        let num1 = random() % count
+        let num1 = randomInt() % count
         for _ in 0..<num1 {
-            deleteIndices.append(random() % count)
+            deleteIndices.append(randomInt() % count)
         }
         //print("Will delete \(num1) keys")
 
-        let num2 = random() % count
+        let num2 = randomInt() % count
         for _ in 0..<num2 {
-            lookupIndices.append(random() % count)
+            lookupIndices.append(randomInt() % count)
         }
         //print("Will lookup \(num2) keys")
     
-        let num3 = random() % count
+        let num3 = randomInt() % count
         for _ in 0..<num3 {
-            updateIndices.append(random() % count)
+            updateIndices.append(randomInt() % count)
         }
         //print("Will update \(num3) keys")
     }
@@ -191,7 +206,7 @@ class SwiftHashtableTests: XCTestCase {
         let end = clock()
 
         print("Time used with Dictionary filled with objects: \((end-start)/1) us")
-        return (sum, end-start);
+        return (sum, Int(end-start));
     }
 
     func perfTestHashtable(count:Int) -> (Int, Int) {
@@ -243,7 +258,7 @@ class SwiftHashtableTests: XCTestCase {
         let end = clock()
 
         print("Time used with Hashtable filled with objects: \((end-start)/1) us. Collison rate: \(table.collisionRate())%")
-        return (sum, end-start);
+        return (sum, Int(end-start));
     }
 
     // Random test the hash table and compare results with Dictionary

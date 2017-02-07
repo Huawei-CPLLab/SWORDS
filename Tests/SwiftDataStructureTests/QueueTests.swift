@@ -21,7 +21,7 @@ import XCTest
 class QueueTests: XCTestCase {
     let n : Int = 100000
 
-    func checkCorrect<Q:Queue where Q.T == Int>(queue:Q) {
+    func checkCorrect<Q:Queue>(queue:Q) where Q.T == Int {
         for i in 1...100 {
             queue.enqueue(item:i)
         }
